@@ -4,7 +4,7 @@
 Warden::Manager.after_set_user except: :fetch do |user, auth, _opts|
   if auth.cookies.signed[:guest_token].present?
     if user.is_a?(Ibrain::User)
-      
+      # Todo: hook after signed_in
     end
   end
 end

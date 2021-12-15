@@ -4,22 +4,22 @@ Gem::Specification.new do |spec|
   spec.name        = "ibrain-auth"
   spec.version     = Ibrain::Auth::VERSION
   spec.authors     = ["Tai Nguyen Van"]
-  spec.email       = ["tainv@its-global.vn"]
-  spec.homepage    = "https://its-global.vn"
+  spec.email       = ["john@techfox.io"]
+  spec.homepage    = "https://techfox.io"
   spec.summary     = "Its Auth is an sso authen gem for Ruby on Rails."
   spec.description = spec.summary
   spec.license     = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://gitlab.com/its-global/ibrain/ruby/ibrain-auth"
+  spec.metadata["source_code_uri"] = "https://github.com/john-techfox/ibrain-auth.git"
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   spec.add_dependency "rails", "~> 6.1.4", ">= 6.1.4.1"
   spec.add_dependency "devise", "~> 4.8.0"
-  spec.add_dependency "devise-encryptable", "0.2.0"
-  spec.add_dependency "devise-i18n"
-  spec.add_dependency "devise-jwt"
+  spec.add_dependency "devise-encryptable", "~> 0.2.0"
+  spec.add_dependency "devise-i18n", "~> 1.10.1"
+  spec.add_dependency "devise-jwt", "~> 0.9.0"
   
   # Use Omniauth SSO
   spec.add_dependency 'omniauth', '~> 2.0.4'

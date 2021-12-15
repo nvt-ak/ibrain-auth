@@ -14,6 +14,7 @@ module Ibrain
       def add_files
         template 'config/initializers/devise.rb.tt', 'config/initializers/devise.rb', skip: true
         template 'config/initializers/ibrain_auth.rb.tt', 'config/initializers/ibrain_auth.rb'
+        template 'config/initializers/warden.rb.tt', 'config/initializers/warden.rb'
       end
     end
   end

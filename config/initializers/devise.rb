@@ -128,14 +128,23 @@ Devise.setup do |config|
   # you can configure them inside the config.warden block. The example below
   # allows you to setup OAuth, using http://github.com/roman/warden_oauth
   #
-  # config.warden do |manager|
-  #   manager.oauth(:twitter) do |twitter|
-  #     twitter.consumer_secret = <YOUR CONSUMER SECRET>
-  #     twitter.consumer_key  = <YOUR CONSUMER KEY>
-  #     twitter.options :site => 'http://twitter.com'
-  #   end
-  #   manager.default_strategies(:scope => :user).unshift :twitter_oauth
-  # end
+  config.warden do |manager|
+    manager.oauth(:twitter) do |twitter|
+      twitter.consumer_secret = Ibrain::Auth.config.twitter_app_id
+      twitter.consumer_key  = Ibrain::Auth.config.twitter_app_secret
+      twitter.options :site => 'http://twitter.com'
+    end
+
+    manager.default_strategies(:scope => :user).unshift :twitter_oauth
+
+    manager.oauth(:facebook) do |facebook|
+      facebook.consumer_secret = Ibrain::Auth.config.facebook_app_id
+      facebook.consumer_key  = Ibrain::Auth.config.facebook_app_secret
+      facebook.options :site => 'http://facebook.com'
+    end
+
+    manager.default_strategies(:scope => :user).unshift :facebook_oauth
+  end
   #
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
