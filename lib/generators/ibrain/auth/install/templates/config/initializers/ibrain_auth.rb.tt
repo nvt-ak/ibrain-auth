@@ -1,0 +1,23 @@
+Ibrain::Auth.config do |config|
+  # Using restful api
+  # config.draw_restful_routes = true
+
+  # Api version as namespace at routes
+  # config.api_version =  'v1'
+
+  # SSO facebook
+  # config.facebook_app_id =  nil
+  # config.facebook_app_secret =  nil
+
+  # SSO Google
+  # config.google_app_id =  nil
+  # config.google_app_secret =  nil
+
+  # SSO twitter
+  # config.twitter_app_id =  nil
+  # config.twitter_app_secret =  nil
+  
+  # SSO Apple
+  # config.apple_app_id =  nil
+  # config.apple_app_secret =  nil
+end
