@@ -7,4 +7,7 @@ Ibrain::Auth.config do |config|
 
   # Can use RAILS_MASTER_KEY or something else
   config.jwt_secret_key = 'RAILS_MASTER_KEY'
+
+  # Set user table name for rails ORM
+  config.user_table_name = 'ibrain_users'
 end

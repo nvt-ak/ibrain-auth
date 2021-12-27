@@ -3,6 +3,8 @@
 module Ibrain
   module Auth
     class User < Ibrain::Base
+      self.table_name = Ibrain::Auth::Config.user_table_name
+
       include Devise::JWT::RevocationStrategies::JTIMatcher
 
       devise :database_authenticatable, :registerable,

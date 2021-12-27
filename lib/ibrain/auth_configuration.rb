@@ -8,5 +8,8 @@ module Ibrain
 
     # JWT Secret key
     preference :jwt_secret_key, :string, default: nil
+
+    # JWT user table name
+    preference :user_table_name, :string, default: 'ibrain_users'
   end
 end
