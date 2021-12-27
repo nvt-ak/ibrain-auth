@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Ibrain
   # frozen_string_literal: true
 
   module Auth
-    VERSION = "0.1.0"
+    VERSION = '0.1.0'
 
     def self.ibrain_auth_version
       VERSION

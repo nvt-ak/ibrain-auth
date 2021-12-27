@@ -10,18 +10,13 @@ module Ibrain
       engine_name 'ibrain_auth'
       config.generators.api_only = true
 
-      initializer "ibrain.auth.environment", before: :load_config_initializers do |_app|
+      initializer 'ibrain.auth.environment', before: :load_config_initializers do |_app|
         require 'ibrain/auth_configuration'
 
         Ibrain::Auth::Config = Ibrain::AuthConfiguration.new
       end
 
-      initializer "ibrain.set_user_class", after: :load_config_initializers do
-        Ibrain.user_class = "Ibrain::User"
-      end
-
       config.to_prepare do
-        Ibrain::Auth::Engine.prepare_api
         ApplicationController.include Ibrain::AuthenticationHelpers
       end
 
@@ -40,16 +35,6 @@ module Ibrain
           WARN
 
           false
-        end
-      end
-
-      def self.prepare_api
-        Ibrain::Auth::BaseController.fallback_on_unauthorized = -> do
-          error = ::OpenStruct.new({
-            message: I18n.t('ibrain.authorization_failure')
-          })
-
-          render_json_error(error, :unauthorized)
         end
       end
     end

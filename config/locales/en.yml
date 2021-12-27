@@ -1,0 +1,12 @@
+en:
+  ibrain:
+    system:
+      messages:
+        success: Retrieving data successfully
+        ok: Retrieving data successfully
+    errors:
+      session:
+        invalid_session: Invalid login session. Please try again!
+        expired_session: The login session has expired.
+      account:
+        not_found: Account not found

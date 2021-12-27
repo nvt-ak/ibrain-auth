@@ -5,6 +5,8 @@ require 'rails/generators'
 module Ibrain
   module Auth
     class InstallGenerator < Rails::Generators::Base
+      class_option :with_ridgepole, type: :boolean, default: true
+
       def self.source_paths
         paths = superclass.source_paths
         paths << File.expand_path('templates', __dir__)
@@ -12,9 +14,14 @@ module Ibrain
       end
 
       def add_files
-        template 'config/initializers/devise.rb.tt', 'config/initializers/devise.rb', skip: true
-        template 'config/initializers/ibrain_auth.rb.tt', 'config/initializers/ibrain_auth.rb'
-        template 'config/initializers/warden.rb.tt', 'config/initializers/warden.rb'
+        template 'config/initializers/devise.rb.tt', 'config/initializers/devise.rb', { skip: true }
+        template 'config/initializers/ibrain_auth.rb.tt', 'config/initializers/ibrain_auth.rb', { skip: true }
+
+        if options[:with_ridgepole]
+          template 'db/schemas/users_schema.erb', 'db/schemas/users.schema', { skip: true }
+        else
+          template 'db/schemas/users_migrate.erb', "db/migrate/#{Time.current.to_i}_add_users.rb", { skip: true }
+        end
       end
     end
   end

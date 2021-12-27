@@ -3,13 +3,11 @@
 module Ibrain
   module AuthenticationHelpers
     def self.included(receiver)
-      if receiver.send(:respond_to?, :helper_method)
-        receiver.send(:helper_method, :ibrain_current_user)
-      end
+      receiver.send(:helper_method, :ibrain_current_user) if receiver.send(:respond_to?, :helper_method)
     end
 
     def ibrain_current_user
-      current_ibrain_user
+      current_user
     end
   end
 end

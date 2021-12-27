@@ -1,0 +1,12 @@
+jp:
+  ibrain:
+    system:
+      message:
+        success: データを正常に取得する
+        ok: データを正常に取得しています
+    errors:
+      session:
+        invalid_session: 無効なログインセッション。 もう一度やり直してください！
+        expired_session: ログインセッションが期限切れになりました。
+      account:
+        not_found: アカウントが見つかりません
