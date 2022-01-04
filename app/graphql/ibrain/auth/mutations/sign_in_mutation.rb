@@ -1,0 +1,45 @@
+# frozen_string_literal: true
+
+module Ibrain::Auth::Mutations
+  class SignInMutation < BaseMutation
+    field :user, Types::Objects::UserType, null: true
+    field :token, String, null: true
+    field :result, Boolean, null: true
+
+    argument :username, String, description: 'Username', required: true
+    argument :password, String, description: 'Password', required: true
+
+    def resolve(args)
+      # TODO: define logic inside repository
+      repo = ::AuthRepository.new(nil, normalize_params(args))
+      user = repo.sign_in
+
+      if user.present?
+        sign_in(resource_name, user)
+        @current_user = warden.authenticate!(auth_options)
+
+        warden.set_user(current_user)
+        current_user.jwt_token, jti = auth_headers(request, user)
+
+        current_user.jti = jti
+        current_user.save!
+      end
+
+      OpenStruct.new(
+        user: user_signed_in? ? current_user : nil,
+        token: current_user.try(:jwt_token),
+        result: user_signed_in?
+      )
+    end
+
+    private
+
+    def normalize_params(args)
+      ActionController::Parameters.new({ auth: args })
+    end
+
+    def auth_options
+      { scope: resource_name }
+    end
+  end
+end

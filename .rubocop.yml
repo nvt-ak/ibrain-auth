@@ -592,3 +592,6 @@ Rails/WhereNot: # new in 2.8
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
+
+Style/OpenStructUse:
+  Enabled: false

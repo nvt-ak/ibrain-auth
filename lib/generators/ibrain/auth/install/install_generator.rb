@@ -16,6 +16,7 @@ module Ibrain
       def add_files
         template 'config/initializers/devise.rb.tt', 'config/initializers/devise.rb', { skip: true }
         template 'config/initializers/ibrain_auth.rb.tt', 'config/initializers/ibrain_auth.rb', { skip: true }
+        template 'config/initializers/ibrain_jwt.rb.tt', 'config/initializers/ibrain_jwt.rb', { skip: true }
 
         if options[:with_ridgepole]
           template 'db/schemas/users_schema.erb', 'db/schemas/users.schema', { skip: true }

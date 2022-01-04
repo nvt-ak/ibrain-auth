@@ -7,21 +7,11 @@ class AuthRepository < Ibrain::BaseRepository
     super(nil, record)
 
     @params = params
+    @collection = Ibrain.user_class
   end
 
   def create
-    user = sso_verify if normalize_params[:id_token].present?
-
-    if manual_params[:username].present?
-      query = available_columns.map do |column_name|
-        <<~RUBY
-          #{column_name} = '#{manual_params[:username]}'
-        RUBY
-      end.join('OR')
-
-      user = Ibrain.user_class.where(query).first
-    end
-
+    user = is_sso? ? sso_verify : collection.ibrain_find(manual_params, available_columns)
     user.assign_attributes(normalize_params)
     user.save
 
@@ -29,13 +19,7 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def sign_in
-    return sso_verify if normalize_params[:id_token].present?
-
-    user = Ibrain.user_class.where(
-      'username = ? or email = ?',
-      manual_params[:username],
-      manual_params[:username]
-    ).first
+    user = is_sso? ? sso_verify : collection.ibrain_find(manual_params, available_columns)
 
     return unless user.try(:valid_password?, manual_params[:password])
 
@@ -44,7 +28,7 @@ class AuthRepository < Ibrain::BaseRepository
 
   private
 
-  attr_reader :params
+  attr_reader :params, :collection
 
   def firebase_url
     "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=#{firebase_api_key}"
@@ -78,10 +62,14 @@ class AuthRepository < Ibrain::BaseRepository
 
     raise ActiveRecord::NotFound, I18n.t('ibrain.errors.account.not_found') if uid.blank?
 
-    Ibrain.user_class.find_by(uid: uid)
+    collection.find_by(uid: uid)
   end
 
   def available_columns
-    Ibrain.user_class.column_names.select { |f| ACCOUNT_COUMNS.include?(f) }
+    collection.column_names.select { |f| ACCOUNT_COUMNS.include?(f) }
+  end
+
+  def is_sso?
+    normalize_params[:id_token].present?
   end
 end
