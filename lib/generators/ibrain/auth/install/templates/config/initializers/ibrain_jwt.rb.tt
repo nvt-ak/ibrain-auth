@@ -1,5 +1,13 @@
+# frozen_string_literal: true
+
+require 'ibrain/auth/failure_app'
+
 # ==> Configuration for jwt
 Devise.jwt do |jwt|
   jwt.secret = ENV.fetch('JWT_SECRET_KEY', Ibrain::Auth::Config.jwt_secret_key) # Rails.application.credentials.secret_key_base
   jwt.expiration_time = 3600 * 24 * 30 # 30day
+end
+
+Devise.warden do |manager|
+  manager.failure_app = Ibrain::Auth::FailureApp
 end

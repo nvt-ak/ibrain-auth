@@ -10,3 +10,4 @@ en:
         expired_session: The login session has expired.
       account:
         not_found: Account not found
+        incorrect: Username or Password is incorrect!

@@ -10,3 +10,4 @@ vi:
         expired_session: Phiên đăng nhập đã hết hạn.
       account:
         not_found: Không tìm thấy tài khoản
+        incorrect: Tài khoản hoặc mật khẩu không chính xác!

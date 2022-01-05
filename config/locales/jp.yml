@@ -10,3 +10,4 @@ jp:
         expired_session: ログインセッションが期限切れになりました。
       account:
         not_found: アカウントが見つかりません
+        incorrect: ユーザー名またはパスワードが正しくありません！

@@ -14,16 +14,16 @@ module Ibrain::Auth::Mutations
       repo = ::AuthRepository.new(nil, normalize_params(args))
       user = repo.sign_in
 
-      if user.present?
-        sign_in(resource_name, user)
-        @current_user = warden.authenticate!(auth_options)
+      raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.account.incorrect') if user.blank?
 
-        warden.set_user(current_user)
-        current_user.jwt_token, jti = auth_headers(request, user)
+      sign_in(resource_name, user)
+      @current_user = warden.authenticate!(auth_options)
 
-        current_user.jti = jti
-        current_user.save!
-      end
+      warden.set_user(current_user)
+      current_user.jwt_token, jti = auth_headers(request, user)
+
+      current_user.jti = jti
+      current_user.save!
 
       OpenStruct.new(
         user: user_signed_in? ? current_user : nil,
