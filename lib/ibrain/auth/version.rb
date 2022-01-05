@@ -4,14 +4,14 @@ module Ibrain
   # frozen_string_literal: true
 
   module Auth
-    VERSION = '0.1.3'
+    VERSION = '0.1.4'
 
     def self.ibrain_auth_version
       VERSION
     end
 
     def self.previous_ibrain_auth_minor_version
-      '0.1.2'
+      '0.1.3'
     end
 
     def self.ibrain_auth_gem_version
