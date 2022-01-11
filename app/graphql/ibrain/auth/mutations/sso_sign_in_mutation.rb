@@ -6,8 +6,7 @@ module Ibrain::Auth::Mutations
     field :token, String, null: true
     field :result, Boolean, null: true
 
-    argument :username, String, description: 'Username', required: true
-    argument :password, String, description: 'Password', required: true
+    argument :id_token, String, description: 'Id Token from SSO', required: true
 
     def resolve(args)
       # TODO: define logic inside repository
