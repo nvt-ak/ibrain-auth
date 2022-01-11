@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ibrain::Auth::Mutations
-  class SsoSiginInMutation < BaseMutation
+  class SsoSignInMutation < BaseMutation
     field :user, Types::Objects::UserType, null: true
     field :token, String, null: true
     field :result, Boolean, null: true
