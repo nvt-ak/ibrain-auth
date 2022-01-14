@@ -17,7 +17,7 @@ module Ibrain
         # for hasura
         hasura_keys = {
             'https://hasura.io/jwt/claims': {
-            'x-hasura-allowed-roles': [role],
+            'x-hasura-allowed-roles': User.roles.keys,
             'x-hasura-default-role': role,
             'x-hasura-user-id': id.to_s
           }
