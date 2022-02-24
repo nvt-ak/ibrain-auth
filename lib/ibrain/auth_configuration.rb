@@ -11,5 +11,8 @@ module Ibrain
 
     # JWT user table name
     preference :user_table_name, :string, default: 'ibrain_users'
+
+    # sign_up input
+    preference :sign_up_input, :class, default: Ibrain::Auth::Types::Attributes::SignUpInput
   end
 end

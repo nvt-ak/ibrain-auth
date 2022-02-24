@@ -12,15 +12,16 @@ class AuthRepository < Ibrain::BaseRepository
 
   def create
     user = is_sso? ? sso_verify : collection.ibrain_find(manual_params, available_columns)
-    user.assign_attributes(normalize_params)
+    user.assign_attributes(normalize_params.except(:id_token))
     user.save
 
     user
   end
 
   def sign_in
-    user = is_sso? ? sso_verify : collection.ibrain_find(manual_params, available_columns)
+    return sso_verify if is_sso?
 
+    user = collection.ibrain_find(manual_params, available_columns)
     return unless user.try(:valid_password?, manual_params[:password])
 
     user
@@ -49,7 +50,7 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def normalize_params
-    params.require(:auth).permit(:id_token)
+    params.require(:auth).permit(permitted_attributes)
   end
 
   def manual_params
@@ -57,10 +58,11 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def sso_verify
-    response = HTTParty.post(url, headers: base_headers, body: { 'idToken' => normalize_params[:id_token] }.to_json )
-    uid = response.try(:fetch, 'users', []).try(:at, 0).try(:fetch, 'localId', nil)
+    response = HTTParty.post(firebase_url, headers: base_headers, body: { 'idToken' => normalize_params[:id_token] }.to_json )
+    user_information = response.try(:fetch, 'users', []).try(:at, 0)
 
-    raise ActiveRecord::NotFound, I18n.t('ibrain.errors.account.not_found') if uid.blank?
+    uid = user_information.try(:fetch, 'localId', nil)
+    raise ActiveRecord::RecordNotFound, I18n.t('ibrain.errors.account.not_found') if uid.blank?
 
     collection.find_by(uid: uid)
   end
@@ -71,5 +73,18 @@ class AuthRepository < Ibrain::BaseRepository
 
   def is_sso?
     normalize_params[:id_token].present?
+  end
+
+  def permitted_attributes
+    Ibrain.user_class.permitted_attributes.reject { |k| permintted_columns.include?(k) }.map(&:to_sym).concat([:id_token])
+  end
+
+  def permintted_columns
+    %w[
+      reset_password_token reset_password_sent_at
+      remember_created_at sign_in_count uid jti
+      current_sign_in_at last_sign_in_at current_sign_in_ip
+      last_sign_in_ip role encrypted_password
+    ]
   end
 end

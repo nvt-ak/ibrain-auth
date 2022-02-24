@@ -8,6 +8,7 @@ module Ibrain::Auth::Mutations
 
     argument :username, String, description: 'Username', required: true
     argument :password, String, description: 'Password', required: true
+    argument :device_token, String, description: 'Device token for notification', required: false
 
     def resolve(args)
       # TODO: define logic inside repository
@@ -24,6 +25,12 @@ module Ibrain::Auth::Mutations
 
       current_user.jti = jti
       current_user.save!
+
+      if args[:device_token].present?
+        device_token = current_user.device_tokens.find_by(token: args[:device_token])
+
+        current_user.device_tokens.create!({ token: args[:device_token] }) if device_token.blank?
+      end
 
       context[:current_user] = current_user
 

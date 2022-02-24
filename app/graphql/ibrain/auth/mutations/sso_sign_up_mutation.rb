@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 module Ibrain::Auth::Mutations
-  class SsoSignInMutation < BaseMutation
+  class SsoSignUpMutation < BaseMutation
     field :user, Types::Objects::UserType, null: true
     field :token, String, null: true
     field :result, Boolean, null: true
-    field :is_verified, Boolean, null: true
 
     argument :id_token, String, description: 'Id Token from SSO', required: true
+    argument :user, Ibrain::Auth::Config.sign_up_input, required: true
     argument :device_token, String, description: 'Device token for notificaiton', required: false
 
     def resolve(args)
       # TODO: define logic inside repository
       repo = ::AuthRepository.new(nil, normalize_params(args))
-      user = repo.sign_in
+      user = repo.sign_up
 
       return OpenStruct.new({ user: nil, token: nil, result: false, is_verified: false }) if user.blank?
 

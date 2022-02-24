@@ -10,4 +10,7 @@ Ibrain::Auth.config do |config|
 
   # Set user table name for rails ORM
   config.user_table_name = 'ibrain_users'
+
+  # sign_up graphql input
+  config.sign_up_input = Ibrain::Auth::Types::Attributes::SignUpInput
 end
