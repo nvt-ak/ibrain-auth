@@ -13,6 +13,9 @@ module Ibrain
     preference :user_table_name, :string, default: 'ibrain_users'
 
     # sign_up input
-    preference :sign_up_input, :class, default: Ibrain::Auth::Types::Attributes::SignUpInput
+    preference :sign_up_input, :class, default: Ibrain::Auth::Types::Input::SignUpInput
+
+    # sign_in input
+    preference :sign_in_input, :class, default: Ibrain::Auth::Types::Input::SignInInput
   end
 end

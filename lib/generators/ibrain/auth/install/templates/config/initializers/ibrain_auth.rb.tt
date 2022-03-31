@@ -12,5 +12,8 @@ Ibrain::Auth.config do |config|
   config.user_table_name = 'ibrain_users'
 
   # sign_up graphql input
-  config.sign_up_input = Ibrain::Auth::Types::Attributes::SignUpInput
+  config.sign_up_input = Ibrain::Auth::Types::Input::SignUpInput
+
+  # sign_in graphql input
+  config.sign_up_input = Ibrain::Auth::Types::Input::SignInInput
 end

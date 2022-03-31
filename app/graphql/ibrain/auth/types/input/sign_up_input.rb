@@ -3,7 +3,7 @@
 module Ibrain
   module Auth
     module Types
-      module Attributes
+      module Input
         class SignUpInput < Ibrain::Types::BaseInputObject
           argument :first_name, String, required: false
           argument :last_name, String, required: false

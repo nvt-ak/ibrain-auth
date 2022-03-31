@@ -6,8 +6,7 @@ module Ibrain::Auth::Mutations
     field :token, String, null: true
     field :result, Boolean, null: true
 
-    argument :username, String, description: 'Username', required: true
-    argument :password, String, description: 'Password', required: true
+    argument :auth, Ibrain::Auth::Config.sign_in_input, required: true
     argument :device_token, String, description: 'Device token for notification', required: false
 
     def resolve(args)
