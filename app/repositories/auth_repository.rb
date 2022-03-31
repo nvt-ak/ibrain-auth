@@ -50,11 +50,11 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def normalize_params
-    params.require(:auth).permit(permitted_attributes)
+    params.permit(permitted_attributes)
   end
 
   def manual_params
-    params.require(:auth).permit(:username, :password)
+    params.permit(:username, :password)
   end
 
   def sso_verify
@@ -84,7 +84,7 @@ class AuthRepository < Ibrain::BaseRepository
       reset_password_token reset_password_sent_at
       remember_created_at sign_in_count uid jti
       current_sign_in_at last_sign_in_at current_sign_in_ip
-      last_sign_in_ip role encrypted_password
+      last_sign_in_ip role encrypted_password id_token
     ]
   end
 end

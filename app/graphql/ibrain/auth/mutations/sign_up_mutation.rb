@@ -44,7 +44,9 @@ module Ibrain::Auth::Mutations
     private
 
     def normalize_params(args)
-      ActionController::Parameters.new({ auth: args })
+      args[:user].to_params
+    rescue StandardError
+      ActionController::Parameters.new({})
     end
 
     def auth_options
