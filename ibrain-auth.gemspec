@@ -17,15 +17,16 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
-  spec.add_dependency 'devise', '~> 4.8.0'
-  spec.add_dependency 'devise-encryptable', '~> 0.2.0'
-  spec.add_dependency 'devise-i18n', '~> 1.10.1'
-  spec.add_dependency 'devise-jwt', '~> 0.9.0'
-  spec.add_dependency 'ibrain-core', '~> 0.3.0'
-  spec.add_dependency 'rails', '~> 6.1.4', '>= 6.1.4.1'
+  spec.add_dependency 'devise'
+  spec.add_dependency 'devise-encryptable'
+  spec.add_dependency 'devise-i18n'
+  spec.add_dependency 'devise-jwt'
+  spec.add_dependency 'ibrain-core'
+  spec.add_dependency 'rails'
+  spec.add_dependency 'apple_id'
 
   # Use Omniauth SSO
-  spec.add_dependency 'omniauth', '~> 2.0.4'
+  spec.add_dependency 'omniauth'
   spec.metadata = {
     'rubygems_mfa_required' => 'true'
   }
