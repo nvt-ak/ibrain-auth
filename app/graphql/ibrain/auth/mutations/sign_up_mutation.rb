@@ -6,21 +6,18 @@ module Ibrain::Auth::Mutations
     field :token, String, null: true
     field :result, Boolean, null: true
 
-    argument :user, Ibrain::Auth::Config.sign_up_input, required: true
+    argument :attributes, Ibrain::Auth::Config.sign_up_input, required: true
     argument :device_token, String, description: 'Device token for notificaiton', required: false
 
     def resolve(args)
       # TODO: define logic inside repository
-      repo = ::AuthRepository.new(nil, normalize_params(args))
-      user = repo.sign_up
+      return graphql_returning(false, false) if auth_resource.blank?
 
-      return OpenStruct.new({ user: nil, token: nil, result: false, is_verified: false }) if user.blank?
-
-      sign_in(resource_name, user)
+      sign_in(resource_name, auth_resource)
       @current_user = warden.authenticate!(auth_options)
 
       warden.set_user(current_user)
-      current_user.jwt_token, jti = auth_headers(request, user)
+      current_user.jwt_token, jti = auth_headers(request, auth_resource)
 
       current_user.jti = jti
       current_user.save!
@@ -33,24 +30,41 @@ module Ibrain::Auth::Mutations
 
       context[:current_user] = current_user
 
-      OpenStruct.new(
-        user: user_signed_in? ? current_user : nil,
-        token: current_user.try(:jwt_token),
-        result: user_signed_in?,
-        is_verified: true
+      graphql_returning(
+        user_signed_in?,
+        true,
+        user_signed_in? ? current_user : nil,
+        current_user.try(:jwt_token),
       )
     end
 
     private
 
-    def normalize_params(args)
-      args[:user].to_params
+    def load_resource
+      repo.sign_up
+    end
+
+    def repo
+      ::AuthRepository.new(nil, normalize_parameters)
+    end
+
+    def normalize_parameters
+      attribute_params
     rescue StandardError
       ActionController::Parameters.new({})
     end
 
     def auth_options
       { scope: resource_name }
+    end
+
+    def graphql_returning(result, is_verified, user = nil, token = nil)
+      OpenStruct.new(
+        user: user,
+        token: token,
+        result: result,
+        is_verified: is_verified
+      )
     end
   end
 end

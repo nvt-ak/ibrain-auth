@@ -11,6 +11,13 @@ module Ibrain::Auth::Mutations
 
     helper_method(*helpers)
 
+    def ready?(args)
+      super(args)
+      
+      @auth_resource = load_resource
+      true
+    end
+
     # Override prefixes to consider the scoped view.
     # Notice we need to check for the request due to a bug in
     # Action Controller tests that forces _prefixes to be
@@ -27,6 +34,8 @@ module Ibrain::Auth::Mutations
     end
 
     protected
+
+    attr_reader :auth_resource
 
     def auth_headers(headers, user, scope: nil, aud: nil)
       scope ||= Devise::Mapping.find_scope!(user)
@@ -197,6 +206,10 @@ module Ibrain::Auth::Mutations
     def resource_params
       params.fetch(resource_name, {})
     end
+
+    def repo; end
+    def load_resource; end
+    def normalize_parameters; end
 
     ActiveSupport.run_load_hooks(:devise_controller, self)
   end

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative '../../app/graphql/ibrain/auth/types/input/sign_in_input.rb'
+require_relative '../../app/graphql/ibrain/auth/types/input/sign_up_input.rb'
+
 module Ibrain
   class AuthConfiguration < Preferences::Configuration
     preference :api_version, :string, default: 'v1'

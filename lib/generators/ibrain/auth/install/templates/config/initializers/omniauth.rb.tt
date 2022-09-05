@@ -1,0 +1,12 @@
+# frozen_string_literal: true
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  # For twitter authenticate
+  # provider :twitter, ENV['TWITTER_CLIENT_ID'], ENV['TWITTER_CLIENT_SECRET']
+
+  # For line authenticate
+  # provider :line, ENV['LINE_CLIENT_ID'], ENV['LINE_CLIENT_SECRET']
+
+  # For apple authenticate
+  # provider :apple, ENV['APPLE_CLIENT_ID'], ENV['APPLE_CLIENT_SECRET']
+end

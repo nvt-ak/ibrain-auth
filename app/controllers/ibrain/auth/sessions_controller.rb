@@ -41,4 +41,16 @@ class Ibrain::Auth::SessionsController < Devise::SessionsController
   def repo
     AuthRepository.new(resource, params)
   end
+
+  def twitter_repo
+    TwitterRepository.new(resource, request.env['omniauth.auth'])
+  end
+
+  def apple_repo
+    AppleRepository.new(resource, request.env['omniauth.auth'])
+  end
+
+  def line_repo
+    LineRepository.new(resource, request.env['omniauth.auth'])
+  end
 end

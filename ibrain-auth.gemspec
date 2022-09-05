@@ -23,10 +23,14 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'devise-jwt'
   spec.add_dependency 'ibrain-core'
   spec.add_dependency 'rails'
-  spec.add_dependency 'apple_id'
 
   # Use Omniauth SSO
   spec.add_dependency 'omniauth'
+  spec.add_dependency 'omniauth-twitter'
+  spec.add_dependency 'omniauth-line'
+  spec.add_dependency 'omniauth-facebook'
+  spec.add_dependency 'omniauth-google-oauth2'
+  spec.add_dependency 'omniauth-apple'
   spec.metadata = {
     'rubygems_mfa_required' => 'true'
   }
