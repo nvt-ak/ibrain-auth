@@ -12,8 +12,10 @@ module Ibrain::Auth::Mutations
     helper_method(*helpers)
 
     def ready?(args)
-      super(args)
-      
+      @params = ActionController::Parameters.new(
+        args.to_h.with_indifferent_access.transform_keys(&:underscore)
+      )
+
       @auth_resource = load_resource
       true
     end

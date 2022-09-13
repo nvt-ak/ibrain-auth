@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AppleRepository < Ibrain::BaseRepository
   def initialize(record, params)
     super(nil, record)

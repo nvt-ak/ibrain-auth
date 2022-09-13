@@ -3,9 +3,9 @@
 module Ibrain
   module Auth
     class User < Ibrain::Base
-      include Devise::JWT::RevocationStrategies::JTIMatcher
-
       attr_accessor :jwt_token
+
+      include Devise::JWT::RevocationStrategies::JTIMatcher
 
       self.table_name = Ibrain::Auth::Config.user_table_name
 
