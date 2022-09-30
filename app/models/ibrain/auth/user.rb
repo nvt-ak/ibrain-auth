@@ -40,6 +40,13 @@ module Ibrain
             where(query).first
           end
         end
+
+        def social_find_or_initialize(params)
+          user = find_by(provider: params[:provider], uid: params[:uid])
+          return user if user.present?
+
+          create!(params)
+        end
       end
     end
   end

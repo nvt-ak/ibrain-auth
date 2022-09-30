@@ -11,7 +11,7 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def create
-    user = is_sso? ? sso_verify : collection.ibrain_find(manual_params, available_columns)
+    user = is_social? ? firebase_verify : collection.ibrain_find(manual_params, available_columns)
     user.assign_attributes(normalize_params.except(:id_token))
     user.save
 
@@ -19,7 +19,7 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def sign_in
-    return sso_verify if is_sso?
+    return firebase_verify if is_social?
 
     user = collection.ibrain_find(manual_params, available_columns)
     return unless user.try(:valid_password?, manual_params[:password])
@@ -57,21 +57,31 @@ class AuthRepository < Ibrain::BaseRepository
     params.permit(:username, :password)
   end
 
-  def sso_verify
+  def firebase_verify
     response = HTTParty.post(firebase_url, headers: base_headers, body: { 'idToken' => normalize_params[:id_token] }.to_json )
     user_information = response.try(:fetch, 'users', []).try(:at, 0)
 
     uid = user_information.try(:fetch, 'localId', nil)
+    provider = user_information.
+      try(:fetch, 'providerUserInfo', []).
+      try(:at, 0).try(:fetch, 'providerId', '').
+      try(:gsub, '.com', '')
     raise ActiveRecord::RecordNotFound, I18n.t('ibrain.errors.account.not_found') if uid.blank?
 
-    collection.find_by(uid: uid)
+    collection.social_find_or_initialize({
+      uid: uid,
+      provider: provider,
+      remote_avatar_url: user_information.try(:fetch, 'photoUrl', nil),
+      email: user_information.try(:fetch, 'email', nil),
+      password: 'Eco@123456'
+    })
   end
 
   def available_columns
     collection.column_names.select { |f| ACCOUNT_COUMNS.include?(f) }
   end
 
-  def is_sso?
+  def is_social?
     normalize_params[:id_token].present?
   end
 

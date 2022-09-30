@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module Ibrain::Auth::Mutations
-  class SsoSignInMutation < BaseMutation
+  class SocialSignInMutation < BaseMutation
     field :user, Types::Objects::UserType, null: true
     field :token, String, null: true
     field :result, Boolean, null: true
     field :is_verified, Boolean, null: true
 
-    argument :id_token, String, description: 'Id Token from SSO', required: true
+    argument :id_token, String, description: 'Id Token from firebase', required: true
     argument :device_token, String, description: 'Device token for notificaiton', required: false
 
     def resolve(args)
