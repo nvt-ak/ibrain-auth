@@ -41,7 +41,7 @@ module Ibrain::Auth::Mutations
     private
 
     def load_resource
-      repo.sign_up
+      repo.create
     end
 
     def repo
