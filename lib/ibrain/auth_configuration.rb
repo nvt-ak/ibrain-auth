@@ -17,5 +17,14 @@ module Ibrain
 
     # sign_in input
     preference :sign_in_input, :class, default: Ibrain::Auth::Types::Input::SignInInput
+
+    # firebase private json path
+    preference :firebase_private_key_path, :string, default: Rails.root.join('static/firebase.json')
+
+    # firebase aud url
+    preference :firebase_auth_url, :string, default: "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit"
+
+    # firebase owner email
+    preference :firebase_owner_email, :string, default: nil
   end
 end

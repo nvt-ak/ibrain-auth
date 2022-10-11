@@ -16,4 +16,13 @@ Ibrain::Auth.config do |config|
 
   # sign_in graphql input
   config.sign_up_input = Ibrain::Auth::Types::Input::SignInInput
+
+  # firebase private json path
+  config.firebase_private_key_path = Rails.root.join('static/firebase.json')
+
+  # firebase aud url
+  config.firebase_auth_url = "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit"
+
+  # firebase owner email
+  config.firebase_owner_email = nil
 end

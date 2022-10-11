@@ -2,8 +2,7 @@
 
 module Ibrain::Auth::Mutations
   class SignUpMutation < BaseMutation
-    field :user, Types::Objects::UserType, null: true
-    field :token, String, null: true
+    field :is_verified, Boolean, null: true
     field :result, Boolean, null: true
 
     argument :attributes, Ibrain::Auth::Config.sign_up_input, required: true
@@ -29,13 +28,7 @@ module Ibrain::Auth::Mutations
       end
 
       context[:current_user] = current_user
-
-      graphql_returning(
-        user_signed_in?,
-        true,
-        user_signed_in? ? current_user : nil,
-        current_user.try(:jwt_token),
-      )
+      graphql_returning
     end
 
     private
@@ -58,12 +51,10 @@ module Ibrain::Auth::Mutations
       { scope: resource_name }
     end
 
-    def graphql_returning(result, is_verified, user = nil, token = nil)
+    def graphql_returning
       OpenStruct.new(
-        user: user,
-        token: token,
-        result: result,
-        is_verified: is_verified
+        result: current_user.present?,
+        is_verified: false
       )
     end
   end
