@@ -86,7 +86,7 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def permitted_attributes
-    Ibrain.user_class.permitted_attributes.reject { |k| permintted_columns.include?(k) }.map(&:to_sym).concat([:id_token])
+    Ibrain.user_class.permitted_attributes.reject { |k| permintted_columns.include?(k) }.map(&:to_sym).concat([:id_token]).concat([:password])
   end
 
   def permintted_columns
