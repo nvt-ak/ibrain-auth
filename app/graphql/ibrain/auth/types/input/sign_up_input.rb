@@ -11,6 +11,7 @@ module Ibrain
           argument :phone, String, required: false
           argument :job_id, ID, required: false
           argument :address, String, required: false
+          argument :password, String, required: false
         end
       end
     end

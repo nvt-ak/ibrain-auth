@@ -11,9 +11,9 @@ class AuthRepository < Ibrain::BaseRepository
   end
 
   def create
-    user = is_social? ? firebase_verify : collection.ibrain_find(manual_params, available_columns)
+    user = collection.new(provider: 'manual')
     user.assign_attributes(normalize_params.except(:id_token))
-    user.save
+    user.save!
 
     user
   end
