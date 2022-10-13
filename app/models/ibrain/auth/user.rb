@@ -9,7 +9,7 @@ module Ibrain
 
       self.table_name = Ibrain::Auth::Config.user_table_name
 
-      devise :database_authenticatable, :registerable,
+      devise :database_authenticatable, :registerable, :confirmable,
              :recoverable, :validatable, :timeoutable,
              :jwt_authenticatable, jwt_revocation_strategy: self
 
