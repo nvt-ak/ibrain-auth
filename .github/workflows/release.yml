@@ -19,9 +19,6 @@ jobs:
           package-name: "ibrain-auth"
           bump-minor-pre-major: true
           version-file: "lib/ibrain/auth/version.rb"
-      - name: Setup environments
-        run: |
-          echo "GEM_HOST_API_KEY=${{secrets.RUBYGEMS_AUTH_TOKEN}}" >> $GITHUB_ENV
         if: ${{ steps.release.outputs.release_created }}
       - name: Checkout code if release was created
         uses: actions/checkout@v2
@@ -40,7 +37,7 @@ jobs:
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
           chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${{ env.GEM_HOST_API_KEY }}\n" > $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}\n" > $HOME/.gem/credentials
           gem build *.gemspec
           gem push *.gem
         if: ${{ steps.release.outputs.release_created }}
