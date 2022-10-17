@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class FirebaseRepository < Ibrain::BaseRepository
-  def initialize(record, _params)
+  def initialize(record, params)
     super(nil, record)
 
     @private_key_json = File.open(Ibrain::Auth::Config.firebase_private_key_path).read
     @firebase_owner_email = Ibrain::Auth::Config.firebase_owner_email
+    @params = params
   end
 
   def generate_custom_token!
@@ -26,10 +27,7 @@ class FirebaseRepository < Ibrain::BaseRepository
 
   private
 
-  attr_reader :private_key_json, :firebase_owner_email
-
-  def method_name
-  end
+  attr_reader :private_key_json, :firebase_owner_email, :params
 
   def json_firebase
     JSON.parse(private_key_json, symbolize_names: true)
