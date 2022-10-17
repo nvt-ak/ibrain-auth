@@ -11,3 +11,4 @@ en:
       account:
         not_found: Account not found
         incorrect: Username or Password is incorrect!
+        not_verified: Please verify your account before login

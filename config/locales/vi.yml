@@ -11,3 +11,4 @@ vi:
       account:
         not_found: Không tìm thấy tài khoản
         incorrect: Tài khoản hoặc mật khẩu không chính xác!
+        not_verified: Vui lòng xác minh tài khoản của bạn trước khi đăng nhập

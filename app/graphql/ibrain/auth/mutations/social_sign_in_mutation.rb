@@ -17,12 +17,12 @@ module Ibrain::Auth::Mutations
 
       return OpenStruct.new({ user: nil, token: nil, result: false, is_verified: false }) if user.blank?
 
+      auth_resource.skip_confirmation! unless auth_resource.try(:confirmed?)
       sign_in(resource_name, user)
       @current_user = warden.authenticate!(auth_options)
 
       warden.set_user(current_user)
       current_user.jwt_token, jti = auth_headers(request, user)
-
       current_user.jti = jti
       current_user.save!
 

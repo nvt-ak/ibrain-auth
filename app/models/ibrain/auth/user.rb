@@ -30,6 +30,10 @@ module Ibrain
         super.merge({ 'role' => role }, hasura_keys)
       end
 
+      def can_skip_confirmation?
+        try(:is_admin?) || email.blank?
+      end
+
       class << self
         def ibrain_find(params, available_columns)
           matched_value = params[:username] || params[:email]
@@ -53,11 +57,14 @@ module Ibrain
         end
 
         def create_with_line!(params)
-          created!({
+          user = created!({
             uid: params['uid'],
             provider: 'line',
             remote_avatar_url: params['info']['image']
           })
+
+          user.skip_confirmation! unless user&.confirmed?
+          user
         end
       end
     end
