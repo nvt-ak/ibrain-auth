@@ -19,7 +19,6 @@ jobs:
           package-name: "ibrain-auth"
           bump-minor-pre-major: true
           version-file: "lib/ibrain/auth/version.rb"
-        if: ${{ steps.release.outputs.release_created }}
       - name: Checkout code if release was created
         uses: actions/checkout@v2
         if: ${{ steps.release.outputs.release_created }}
