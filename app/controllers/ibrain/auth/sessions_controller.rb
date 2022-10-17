@@ -14,6 +14,12 @@ class Ibrain::Auth::SessionsController < Devise::SessionsController
     super { |resource| @resource = resource }
   end
 
+  def callback
+    user = line_repo.find_or_initialize!
+
+    render_json_ok(user, nil)
+  end
+
   # GET /resource/sign_in
   # def new
   #   super
@@ -40,14 +46,6 @@ class Ibrain::Auth::SessionsController < Devise::SessionsController
 
   def repo
     AuthRepository.new(resource, params)
-  end
-
-  def twitter_repo
-    TwitterRepository.new(resource, request.env['omniauth.auth'])
-  end
-
-  def apple_repo
-    AppleRepository.new(resource, request.env['omniauth.auth'])
   end
 
   def line_repo

@@ -14,7 +14,7 @@ class FirebaseRepository < Ibrain::BaseRepository
     payload = {
       iss: firebase_owner_email,
       sub: firebase_owner_email,
-      aud: Ibrain::Auth::Config.firebase_aud_url,
+      aud: Ibrain::Auth::Config.firebase_auth_url,
       iat: now,
       exp: now + 3600,
       uid: params[:uid],
