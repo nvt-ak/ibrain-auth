@@ -13,6 +13,10 @@ module Ibrain
              :recoverable, :validatable, :timeoutable,
              :jwt_authenticatable, jwt_revocation_strategy: self
 
+      scope :find_by_line, ->(uid) {
+        find_by(uid: uid, provider: 'line')
+      }
+
       def jwt_payload
         # for hasura
         hasura_keys = {
@@ -46,6 +50,14 @@ module Ibrain
           return user if user.present?
 
           create!(params)
+        end
+
+        def create_with_line!(params)
+          created!({
+            uid: params['uid'],
+            provider: 'line',
+            remote_avatar_url: params['info']['image']
+          })
         end
       end
     end
