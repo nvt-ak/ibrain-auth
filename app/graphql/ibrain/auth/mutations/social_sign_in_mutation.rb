@@ -11,18 +11,14 @@ module Ibrain::Auth::Mutations
     argument :device_token, String, description: 'Device token for notificaiton', required: false
 
     def resolve(args)
-      # TODO: define logic inside repository
-      repo = ::AuthRepository.new(nil, normalize_params(args))
-      user = repo.sign_in
-
-      return OpenStruct.new({ user: nil, token: nil, result: false, is_verified: false }) if user.blank?
+      return OpenStruct.new({ user: nil, token: nil, result: false, is_verified: false }) if auth_resource.blank?
 
       auth_resource.skip_confirmation! unless auth_resource.try(:confirmed?)
-      sign_in(resource_name, user)
+      sign_in(resource_name, auth_resource)
       @current_user = warden.authenticate!(auth_options)
 
       warden.set_user(current_user)
-      current_user.jwt_token, jti = auth_headers(request, user)
+      current_user.jwt_token, jti = auth_headers(request, auth_resource)
       current_user.jti = jti
       current_user.save!
 
@@ -44,7 +40,7 @@ module Ibrain::Auth::Mutations
 
     private
 
-    def normalize_params(args)
+    def normalize_parameters(args)
       ActionController::Parameters.new(args.as_json)
     rescue StandardError
       ActionController::Parameters.new({})
@@ -52,6 +48,14 @@ module Ibrain::Auth::Mutations
 
     def auth_options
       { scope: resource_name }
+    end
+
+    def repo
+      ::AuthRepository.new(nil, normalize_parameters)
+    end
+
+    def load_resource
+      repo.sign_in
     end
   end
 end
