@@ -7,7 +7,7 @@ module Ibrain::Auth::Mutations
     field :result, Boolean, null: true
     field :is_verified, Boolean, null: true
 
-    argument :id_token, String, description: 'Id Token from firebase', required: true
+    argument :attributes, Ibrain::Auth::Config.social_sign_in_input, required: true
     argument :device_token, String, description: 'Device token for notificaiton', required: false
 
     def resolve(args)
@@ -40,8 +40,8 @@ module Ibrain::Auth::Mutations
 
     private
 
-    def normalize_parameters(args)
-      ActionController::Parameters.new(args.as_json)
+    def normalize_parameters
+      attribute_params
     rescue StandardError
       ActionController::Parameters.new({})
     end

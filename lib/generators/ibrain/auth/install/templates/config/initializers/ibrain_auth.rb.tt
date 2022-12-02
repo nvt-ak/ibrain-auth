@@ -25,4 +25,7 @@ Ibrain::Auth.config do |config|
 
   # firebase owner email
   config.firebase_owner_email = nil
+
+  # social sign_in input
+  config.social_sign_in_input = Ibrain::Auth::Types::Input::SocialSignInInput
 end

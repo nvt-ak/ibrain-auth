@@ -26,5 +26,7 @@ module Ibrain
 
     # firebase owner email
     preference :firebase_owner_email, :string, default: nil
+
+    preference :social_sign_in_input, :class, default: Ibrain::Auth::Types::Input::SocialSignInInput
   end
 end
