@@ -2,7 +2,7 @@
 
 Ibrain::Auth::Engine.routes.draw do
   devise_for(:users, {
-    class_name: 'Ibrain::User',
+    class_name: Ibrain.user_class,
     controllers: {
       sessions: 'ibrain/user_sessions',
       registrations: 'ibrain/user_registrations',
