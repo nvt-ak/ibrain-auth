@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ibrain::Auth::UnlocksController < Devise::UnlocksController
+class Ibrain::UserUnlocksController < Devise::UnlocksController
   # GET /resource/unlock/new
   # def new
   #   super

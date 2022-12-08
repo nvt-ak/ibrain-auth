@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 Ibrain::Auth::Engine.routes.draw do
-  devise_for :users, controllers: {
-    sessions: "ibrain/auth/sessions",
-    registrations: "ibrain/auth/registrations",
+  devise_for(:users, {
+    class_name: 'Ibrain::User',
+    controllers: {
+      sessions: 'ibrain/user_sessions',
+      registrations: 'ibrain/user_registrations',
+      passwords: 'ibrain/user_passwords',
+      confirmations: 'ibrain/user_confirmations',
+      omniauth_callbacks: 'ibrain/social_callbacks'
     },
-    path: "api/#{Ibrain::Config.api_version}/users",
-    defaults: { format: :json }
-
-  get "api/#{Ibrain::Config.api_version}/users/callback" => 'sessions#callback'
+    skip: [:unlocks],
+    path_prefix: "api/#{Ibrain::Config.api_version}"
+  })
 end

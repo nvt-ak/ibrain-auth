@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ibrain::Auth::ConfirmationsController < Devise::ConfirmationsController
+class Ibrain::UserConfirmationsController < Devise::ConfirmationsController
   # GET /resource/confirmation/new
   # def new
   #   super

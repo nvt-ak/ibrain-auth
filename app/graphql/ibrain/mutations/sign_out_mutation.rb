@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Ibrain::Auth::Mutations
-  class SignOutMutation < BaseMutation
+module Ibrain::Mutations
+  class SignOutMutation < AuthMutation
     field :result, Boolean, null: true
 
     def resolve

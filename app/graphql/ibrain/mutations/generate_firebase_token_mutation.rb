@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Ibrain::Auth::Mutations
-  class GenerateFirebaseTokenMutation < BaseMutation
+module Ibrain::Mutations
+  class GenerateFirebaseTokenMutation < AuthMutation
     field :result, Boolean, null: true
     field :token, String, null: true
 
-    argument :attributes, ::Ibrain::Auth::Types::Input::GenerateFirebaseTokenInput, required: true
+    argument :attributes, ::Ibrain::Types::Input::GenerateFirebaseTokenInput, required: true
 
     def resolve(_args)
       token = repo.generate_custom_token!

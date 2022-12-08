@@ -1,20 +1,16 @@
 # frozen_string_literal: true
 
-module Ibrain::Auth::Mutations
-  class SignInMutation < BaseMutation
+module Ibrain::Mutations
+  class SocialSignInMutation < AuthMutation
     field :user, Types::Objects::UserType, null: true
     field :token, String, null: true
     field :result, Boolean, null: true
 
-    argument :attributes, Ibrain::Auth::Config.sign_in_input, required: true
+    argument :attributes, Ibrain::Auth::Config.social_sign_in_input, required: true
     argument :device_token, String, description: 'Device token for notification', required: false
 
     def resolve(_args)
-      raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.account.incorrect') if auth_resource.blank?
-
-      if !auth_resource.try(:can_skip_confirmation?) && !auth_resource.try(:confirmed?)
-        raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.account.not_verified')
-      end
+      return graphql_returning(false) if auth_resource.blank?
 
       auth_resource.skip_confirmation! unless auth_resource.try(:confirmed?)
       sign_in(resource_name, auth_resource)
@@ -25,9 +21,10 @@ module Ibrain::Auth::Mutations
       current_user.jti = jti
       current_user.save!
 
-      if params[:device_token].present?
-        device_token = current_user.device_tokens.find_by(token: params[:device_token])
-        current_user.device_tokens.create!({ token: params[:device_token] }) if device_token.blank?
+      if args[:device_token].present?
+        device_token = current_user.device_tokens.find_by(token: args[:device_token])
+
+        current_user.device_tokens.create!({ token: args[:device_token] }) if device_token.blank?
       end
 
       context[:current_user] = current_user

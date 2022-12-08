@@ -66,7 +66,7 @@ class AuthRepository < Ibrain::BaseRepository
       try(:fetch, 'providerUserInfo', []).
       try(:at, 0).try(:fetch, 'providerId', '').
       try(:gsub, '.com', '')
-    raise ActiveRecord::RecordNotFound, I18n.t('ibrain.errors.account.not_found') if uid.blank?
+    raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.account.not_found') if uid.blank?
 
     collection.social_find_or_initialize({
       uid: uid,

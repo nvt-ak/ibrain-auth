@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'omniauth-facebook'
   spec.add_dependency 'omniauth-google-oauth2'
   spec.add_dependency 'omniauth-line'
+  spec.add_dependency 'omniauth-rails_csrf_protection'
   spec.add_dependency 'omniauth-twitter'
   spec.metadata = {
     'rubygems_mfa_required' => 'true'

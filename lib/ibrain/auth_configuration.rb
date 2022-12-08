@@ -13,10 +13,10 @@ module Ibrain
     preference :user_table_name, :string, default: 'ibrain_users'
 
     # sign_up input
-    preference :sign_up_input, :class, default: Ibrain::Auth::Types::Input::SignUpInput
+    preference :sign_up_input, :class, default: Ibrain::Types::Input::SignUpInput
 
     # sign_in input
-    preference :sign_in_input, :class, default: Ibrain::Auth::Types::Input::SignInInput
+    preference :sign_in_input, :class, default: Ibrain::Types::Input::SignInInput
 
     # firebase private json path
     preference :firebase_private_key_path, :string, default: Rails.root.join('static/firebase.json')
@@ -27,6 +27,6 @@ module Ibrain
     # firebase owner email
     preference :firebase_owner_email, :string, default: nil
 
-    preference :social_sign_in_input, :class, default: Ibrain::Auth::Types::Input::SocialSignInInput
+    preference :social_sign_in_input, :class, default: Ibrain::Types::Input::SocialSignInInput
   end
 end

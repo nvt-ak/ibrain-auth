@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ibrain::Auth::PasswordsController < Devise::PasswordsController
+class Ibrain::UserPasswordsController < Devise::PasswordsController
   # GET /resource/password/new
   # def new
   #   super

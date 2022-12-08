@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Ibrain::Auth::Mutations
-  class BaseMutation < Ibrain::Mutations::BaseMutation
+module Ibrain::Mutations
+  class AuthMutation < Ibrain::Mutations::BaseMutation
     include ActionController::Helpers
     include Devise::Controllers::ScopedViews
     include Devise::Controllers::Helpers

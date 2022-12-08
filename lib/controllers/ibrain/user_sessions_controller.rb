@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ibrain::Auth::SessionsController < Devise::SessionsController
+class Ibrain::UserSessionsController < Devise::SessionsController
   include ActionController::Helpers
   include Ibrain::Core::ControllerHelpers::Response
   include ActionController::MimeResponds
@@ -50,5 +50,9 @@ class Ibrain::Auth::SessionsController < Devise::SessionsController
 
   def line_repo
     LineRepository.new(resource, request.env['omniauth.auth'])
+  end
+
+  def apple_repo
+    AppleRepository.new(resource, request.env['omniauth.auth'])
   end
 end
