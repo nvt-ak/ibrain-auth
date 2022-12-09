@@ -8,7 +8,7 @@ module Ibrain::Mutations
     argument :attributes, Ibrain::Auth::Config.sign_up_input, required: true
     argument :device_token, String, description: 'Device token for notificaiton', required: false
 
-    def resolve(args)
+    def resolve(_args)
       # TODO: define logic inside repository
       return graphql_returning(false, false) if auth_resource.blank?
 
@@ -21,10 +21,10 @@ module Ibrain::Mutations
       current_user.jti = jti
       current_user.save!
 
-      if args[:device_token].present?
-        device_token = current_user.device_tokens.find_by(token: args[:device_token])
+      if params[:device_token].present?
+        device_token = current_user.device_tokens.find_by(token: params[:device_token])
 
-        current_user.device_tokens.create!({ token: args[:device_token] }) if device_token.blank?
+        current_user.device_tokens.create!({ token: params[:device_token] }) if device_token.blank?
       end
 
       context[:current_user] = current_user

@@ -21,10 +21,10 @@ module Ibrain::Mutations
       current_user.jti = jti
       current_user.save!
 
-      if args[:device_token].present?
-        device_token = current_user.device_tokens.find_by(token: args[:device_token])
+      if params[:device_token].present?
+        device_token = current_user.device_tokens.find_by(token: params[:device_token])
 
-        current_user.device_tokens.create!({ token: args[:device_token] }) if device_token.blank?
+        current_user.device_tokens.create!({ token: params[:device_token] }) if device_token.blank?
       end
 
       context[:current_user] = current_user
