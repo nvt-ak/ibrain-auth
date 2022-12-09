@@ -9,10 +9,7 @@ module Ibrain
     self.abstract_class = true
     self.table_name = Ibrain::Auth::Config.user_table_name
 
-    devise :database_authenticatable, :registerable, :confirmable,
-           :recoverable, :validatable, :timeoutable, :omniauthable,
-           :jwt_authenticatable, jwt_revocation_strategy: self,
-            omniauth_providers: %i[apple facebook twitter line]
+    devise(*Ibrain::Auth::Config.devise_enabled_modules, jwt_revocation_strategy: self, omniauth_providers: Ibrain::Auth::Config.devise_omniauth_providers)
 
     scope :find_by_line, ->(uid) {
       find_by(uid: uid, provider: 'line')

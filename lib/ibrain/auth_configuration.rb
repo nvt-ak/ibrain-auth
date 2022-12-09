@@ -27,6 +27,13 @@ module Ibrain
     # firebase owner email
     preference :firebase_owner_email, :string, default: nil
 
+    # social login graphql input
     preference :social_sign_in_input, :class, default: Ibrain::Types::Input::SocialSignInInput
+
+    # devise modules setting
+    preference :devise_enabled_modules, :array, default: %i[database_authenticatable registerable confirmable recoverable validatable timeoutable omniauthable jwt_authenticatable]
+
+    # devise social providers setting
+    preference :devise_omniauth_providers, :array, default: %i[apple facebook twitter line]
   end
 end

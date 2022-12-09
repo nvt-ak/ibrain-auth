@@ -26,6 +26,12 @@ Ibrain::Auth.config do |config|
   # firebase owner email
   config.firebase_owner_email = nil
 
-  # social sign_in input
+  # social login graphql input
   config.social_sign_in_input = Ibrain::Types::Input::SocialSignInInput
+
+  # devise modules setting
+  config.devise_enabled_modules = %i[database_authenticatable registerable confirmable recoverable validatable timeoutable omniauthable jwt_authenticatable]
+
+  # devise social providers setting
+  config.devise_omniauth_providers = %i[apple facebook twitter line]
 end
