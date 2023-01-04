@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require 'open-uri'
+
 class FirebaseRepository < Ibrain::BaseRepository
   def initialize(record, params)
     super(nil, record)
 
-    @private_key_json = File.open(Ibrain::Auth::Config.firebase_private_key_path).read
+    @private_key_json = load_private_file
     @firebase_owner_email = Ibrain::Auth::Config.firebase_owner_email
     @params = params
   end
@@ -35,5 +37,18 @@ class FirebaseRepository < Ibrain::BaseRepository
 
   def private_key
     OpenSSL::PKey::RSA.new json_firebase[:private_key]
+  end
+
+  def load_private_file
+    is_remote = Ibrain::Auth::Config.firebase_private_key_path.include?("http")
+
+    if is_remote
+      uri = URI.parse(Ibrain::Auth::Config.firebase_private_key_path)
+      content = uri.open { |f| f.read }
+
+      return content
+    end
+
+    File.open(Ibrain::Auth::Config.firebase_private_key_path).read
   end
 end
