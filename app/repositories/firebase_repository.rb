@@ -12,14 +12,15 @@ class FirebaseRepository < Ibrain::BaseRepository
   end
 
   def generate_custom_token!
-    now = Time.now.to_i
+    iat = Time.now.to_i
+    exp = 60.minutes.from_now.to_i
 
     payload = {
       iss: firebase_owner_email,
       sub: firebase_owner_email,
       aud: Ibrain::Auth::Config.firebase_auth_url,
-      iat: now,
-      exp: now + 3600,
+      iat: iat,
+      exp: exp,
       uid: params[:uid],
       claims: {}
     }

@@ -68,12 +68,14 @@ class AuthRepository < Ibrain::BaseRepository
       try(:gsub, '.com', '')
     raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.account.not_found') if uid.blank?
 
+    provider = 'custom' if user_information.try(:fetch, 'customAuth', false) && provider.blank?
+
     collection.social_find_or_initialize({
       uid: uid,
       provider: provider,
       remote_avatar_url: user_information.try(:fetch, 'photoUrl', nil),
       email: user_information.try(:fetch, 'email', nil),
-      password: 'Eco@123456'
+      password: collection.random_password
     })
   end
 

@@ -4,7 +4,7 @@ module Ibrain
   # frozen_string_literal: true
 
   module Auth
-    VERSION = '0.3.13'
+    VERSION = '0.3.14'
 
     def self.ibrain_auth_version
       VERSION

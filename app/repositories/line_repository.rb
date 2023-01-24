@@ -9,8 +9,7 @@ class LineRepository < Ibrain::BaseRepository
   end
 
   def find_or_initialize!
-    user = @collection.find_by_line(uid: params['uid'])
-
+    user = @collection.find_by_line(uid: params['code'])
     return user if user.present?
 
     @collection.create_with_line!

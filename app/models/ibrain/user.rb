@@ -68,6 +68,10 @@ module Ibrain
         user.skip_confirmation! unless user&.confirmed?
         user
       end
+
+      def random_password
+        (('A'..'Z').to_a.sample(4) + ["~", "!", "@", "#", "$", "%", "^", "&", "*", "_", "-"].sample(1) + ('0'..'9').to_a.sample(2) + ('a'..'z').to_a.sample(4)).join
+      end
     end
   end
 end
