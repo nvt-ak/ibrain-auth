@@ -4,7 +4,8 @@ module Ibrain
   module Types
     module Input
       class GenerateFirebaseTokenInput < Ibrain::Types::BaseInputObject
-        argument :uid, String, required: true
+        argument :code, String, required: true
+        argument :redirect_uri, String, required: true
       end
     end
   end

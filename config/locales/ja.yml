@@ -12,3 +12,5 @@ ja:
         not_found: アカウントが見つかりません
         incorrect: ユーザー名またはパスワードが正しくありません！
         not_verified: ログインする前にアカウントを確認してください
+      custom_token:
+        not_retrieve_uid: uid を取得できません

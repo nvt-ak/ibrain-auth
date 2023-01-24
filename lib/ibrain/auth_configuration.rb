@@ -35,5 +35,11 @@ module Ibrain
 
     # devise social providers setting
     preference :devise_omniauth_providers, :array, default: %i[apple facebook twitter line]
+
+    # line client id
+    preference :line_client_id, :string, default: nil
+
+    # line client secret
+    preference :line_client_secret, :string, default: nil
   end
 end

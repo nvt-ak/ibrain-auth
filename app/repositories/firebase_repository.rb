@@ -15,13 +15,20 @@ class FirebaseRepository < Ibrain::BaseRepository
     iat = Time.now.to_i
     exp = 60.minutes.from_now.to_i
 
+    uid = LineRepository.singleton.retrieve_uid(
+      code: params[:code],
+      redirect_uri: params[:redirect_uri]
+    )
+
+    raise IbrainErrors::UnknownError.new I18n.t("ibrain.errors.custom_token.not_retrieve_uid") unless uid
+
     payload = {
       iss: firebase_owner_email,
       sub: firebase_owner_email,
       aud: Ibrain::Auth::Config.firebase_auth_url,
       iat: iat,
       exp: exp,
-      uid: params[:uid],
+      uid: uid,
       claims: {}
     }
 

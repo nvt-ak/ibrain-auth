@@ -34,4 +34,10 @@ Ibrain::Auth.config do |config|
 
   # devise social providers setting
   config.devise_omniauth_providers = %i[apple facebook twitter line]
+
+  # line client id
+  config.line_client_id = nil
+
+  # line client secret
+  config.line_client_secret = nil
 end
