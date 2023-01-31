@@ -16,7 +16,7 @@ module Ibrain::Mutations
     private
 
     def normalize_parameters
-      attribute_params.permit(:code, :redirect_uri)
+      attribute_params.permit(:code, :redirect_uri, :access_token)
     rescue StandardError
       ActionController::Parameters.new({})
     end

@@ -14,11 +14,7 @@ class FirebaseRepository < Ibrain::BaseRepository
   def generate_custom_token!
     iat = Time.now.to_i
     exp = 60.minutes.from_now.to_i
-
-    uid = LineRepository.singleton.retrieve_uid(
-      code: params[:code],
-      redirect_uri: params[:redirect_uri]
-    )
+    uid = retrieve_uid_execution
 
     raise IbrainErrors::UnknownError.new I18n.t("ibrain.errors.custom_token.not_retrieve_uid") unless uid
 
@@ -58,5 +54,16 @@ class FirebaseRepository < Ibrain::BaseRepository
     end
 
     File.open(Ibrain::Auth::Config.firebase_private_key_path).read
+  end
+
+  def retrieve_uid_execution
+    if params[:access_token].present?
+      return LineRepository.singleton.retrieve_uid_by_access_token(access_token: params[:access_token])
+    end
+
+    LineRepository.singleton.retrieve_uid(
+      code: params[:code],
+      redirect_uri: params[:redirect_uri]
+    )
   end
 end

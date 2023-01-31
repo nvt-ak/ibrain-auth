@@ -43,4 +43,15 @@ class LineRepository
 
     response.try(:fetch, 'userId', nil)
   end
+
+  def retrieve_uid_by_access_token(access_token:)
+    response = HTTParty.get(
+      LINE_INFORMATION_URL,
+      headers: LINE_BASE_HEADERS.merge({
+        'Authorization' => "Bearer #{access_token}"
+      })
+    )
+
+    response.try(:fetch, 'userId', nil)
+  end
 end
