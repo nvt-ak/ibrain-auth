@@ -12,6 +12,6 @@ vi:
         not_found: Không tìm thấy tài khoản
         incorrect: Tài khoản hoặc mật khẩu không chính xác!
         not_verified: Vui lòng xác minh tài khoản của bạn trước khi đăng nhập
-        is_deactivated: Tài khoản đang bị khoá
+        is_deactivated: Tài khoản chưa được xác thực.
       custom_token:
         not_retrieve_uid: Lấy thông tin uid của người dùng thất bại
