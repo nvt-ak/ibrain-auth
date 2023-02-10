@@ -7,10 +7,11 @@ ja:
     errors:
       session:
         invalid_session: 無効なログインセッション。 もう一度やり直してください！
-        expired_session: ログインセッションが期限切れになりました。
+        expired_session: ログインセッションが期限切れになりました。        
       account:
         not_found: アカウントが見つかりません
         incorrect: ユーザー名またはパスワードが正しくありません！
         not_verified: ログインする前にアカウントを確認してください
+        is_deactivated: このアカウントは無効です。
       custom_token:
         not_retrieve_uid: uid を取得できません
