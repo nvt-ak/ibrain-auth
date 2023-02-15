@@ -15,11 +15,11 @@ module Ibrain::Mutations
       auth_resource.skip_confirmation! unless auth_resource.try(:confirmed?)
       sign_in(resource_name, auth_resource)
       @current_user = warden.authenticate!(auth_options)
-      
+
       if !current_user.try(:is_activated?) && Ibrain::Config.is_require_activated_account
         raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.account.is_deactivated')
       end
-      
+
       warden.set_user(current_user)
       current_user.jwt_token, jti = auth_headers(request, auth_resource)
       current_user.jti = jti
