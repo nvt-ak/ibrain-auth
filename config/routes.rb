@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 Ibrain::Auth::Engine.routes.draw do
+  user_table_name = Ibrain::Auth::Config.user_table_name
+
+  return unless ActiveRecord::Base.connection.table_exists? user_table_name
+
   devise_for(:users, {
     class_name: Ibrain.user_class,
     controllers: {
