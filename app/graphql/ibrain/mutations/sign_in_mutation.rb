@@ -24,7 +24,7 @@ module Ibrain::Mutations
         raise ActionController::InvalidAuthenticityToken, I18n.t('ibrain.errors.account.is_deactivated')
       end
 
-      warden.set_user(current_user)
+      # warden.set_user(current_user)
       current_user.jwt_token, jti = auth_headers(request, auth_resource)
       current_user.jti = jti
       current_user.save!
